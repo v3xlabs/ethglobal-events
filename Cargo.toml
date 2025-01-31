@@ -1,5 +1,5 @@
 [package]
-name = "ethglobal-events"
+name = "v3x-events"
 version = "0.1.0"
 edition = "2021"
 
