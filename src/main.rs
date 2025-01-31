@@ -2,10 +2,7 @@ use chrono::{DateTime, Utc};
 use futures::prelude::*;
 use icalendar::{Calendar, CalendarComponent, Component, Event, EventLike};
 use poem::{
-    get, handler,
-    listener::TcpListener,
-    web::{Data, RealIp},
-    EndpointExt, IntoResponse, Route, Server,
+    get, handler, http::HeaderMap, listener::TcpListener, web::{headers::UserAgent, Data, RealIp}, EndpointExt, IntoResponse, Route, Server
 };
 use poem_openapi::payload::PlainText;
 use reqwest::{self, StatusCode};
@@ -73,9 +70,19 @@ pub struct CountryData {
 }
 
 #[handler]
-async fn get_events(state: Data<&Arc<AppState>>, ip: RealIp) -> impl IntoResponse {
+async fn get_events(
+    state: Data<&Arc<AppState>>,
+    ip: RealIp,
+    headers: &HeaderMap,
+) -> impl IntoResponse {
     let ip_str = ip.0.map(|ip| ip.to_string());
-    info!("get_events from {}", ip_str.unwrap_or("unknown".to_string()));
+    let user_agent = headers.get("User-Agent").map(|ua| ua.to_str().unwrap_or_default()).unwrap_or("unknown");
+
+    info!(
+        "get_events from {} with user agent {}",
+        ip_str.unwrap_or("unknown".to_string()),
+        user_agent
+    ); 
 
     let client = reqwest::Client::new();
     let query = r#"{"query":"query {\n\tgetPublishedEvents {\n\t\tid\n\t\tname\n\t\tslug\n\t\ttype\n\t\tstartTime\n\t\tendTime\n\t\twebsite\n\t\tcity {\n\t\t\tname\n\t\t\tcountry {\n\t\t\t\tname\n\t\t\t}\n\t\t}\n\t}\n}"}"#;
