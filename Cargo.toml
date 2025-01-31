@@ -1,0 +1,47 @@
+[package]
+name = "ethglobal-events"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+poem = { version = "3.0.4", git = "https://github.com/poem-web/poem", branch = "master", features = [
+    "rustls",
+    "sse",
+] }
+poem-openapi = { version = "5", git = "https://github.com/poem-web/poem", branch = "master", features = [
+    "chrono",
+    "uuid",
+    "sqlx",
+    "url",
+    "email",
+    "email_address",
+    "redoc",
+    "static-files",
+] }
+chrono = { version = "0.4.39", features = ["serde", "now"] }
+anyhow = "1.0.93"
+dotenvy = "0.15.7"
+regex = "1.11.1"
+reqwest = { version = "0.12.5", features = [
+    "rustls-tls",
+    # Add back the default features excluding native-tls
+    "charset",
+    "http2",
+    "macos-system-configuration",
+    "json",
+], default-features = false }
+rustls = "0.23.19"
+serde = { version = "1.0.204", features = ["derive"] }
+serde_json = { version = "1.0", features = ["raw_value"] }
+serde_repr = "0.1.19"
+serde_with = { version = "3.9.0", features = ["json", "chrono"] }
+thiserror = "2.0.3"
+tracing = { version = "0.1.40", features = ["attributes"] }
+tracing-subscriber = "0.3.18"
+url = { version = "2.5.2", features = ["serde"] }
+async-std = { version = "1.13.0", features = ["attributes", "tokio1"] }
+futures = "0.3.31"
+figment = { version = "0", features = ["env", "serde_json"] }
+graphql_client = { version = "0.14.0", features = ["reqwest"] }
+icalendar = "0.16.11"
+uuid = { version = "1.12.1", features = ["v5"] }
