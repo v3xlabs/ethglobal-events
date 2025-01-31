@@ -27,7 +27,7 @@ jobs:
         run: cargo build --release
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: v3x-events
           path: ./target/release/v3x-events
