@@ -747,34 +747,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ethglobal-events"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "async-std",
- "chrono",
- "dotenvy",
- "figment",
- "futures",
- "graphql_client",
- "icalendar",
- "poem",
- "poem-openapi",
- "regex",
- "reqwest 0.12.12",
- "rustls 0.23.22",
- "serde",
- "serde_json",
- "serde_repr",
- "serde_with",
- "thiserror 2.0.11",
- "tracing",
- "tracing-subscriber",
- "url",
- "uuid",
-]
-
-[[package]]
 name = "event-listener"
 version = "2.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3666,6 +3638,34 @@ dependencies = [
  "getrandom 0.2.15",
  "sha1_smol",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "v3x-events"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-std",
+ "chrono",
+ "dotenvy",
+ "figment",
+ "futures",
+ "graphql_client",
+ "icalendar",
+ "poem",
+ "poem-openapi",
+ "regex",
+ "reqwest 0.12.12",
+ "rustls 0.23.22",
+ "serde",
+ "serde_json",
+ "serde_repr",
+ "serde_with",
+ "thiserror 2.0.11",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+ "uuid",
 ]
 
 [[package]]

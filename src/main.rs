@@ -4,7 +4,7 @@ use icalendar::{Calendar, CalendarComponent, Component, Event, EventLike};
 use poem::{
     get, handler,
     listener::TcpListener,
-    web::Data,
+    web::{Data, RealIp},
     EndpointExt, IntoResponse, Route, Server,
 };
 use poem_openapi::payload::PlainText;
@@ -73,8 +73,9 @@ pub struct CountryData {
 }
 
 #[handler]
-async fn get_events(state: Data<&Arc<AppState>>) -> impl IntoResponse {
-    info!("get_events");
+async fn get_events(state: Data<&Arc<AppState>>, ip: RealIp) -> impl IntoResponse {
+    let ip_str = ip.0.map(|ip| ip.to_string());
+    info!("get_events from {}", ip_str.unwrap_or("unknown".to_string()));
 
     let client = reqwest::Client::new();
     let query = r#"{"query":"query {\n\tgetPublishedEvents {\n\t\tid\n\t\tname\n\t\tslug\n\t\ttype\n\t\tstartTime\n\t\tendTime\n\t\twebsite\n\t\tcity {\n\t\t\tname\n\t\t\tcountry {\n\t\t\t\tname\n\t\t\t}\n\t\t}\n\t}\n}"}"#;
@@ -127,13 +128,12 @@ async fn get_events(state: Data<&Arc<AppState>>) -> impl IntoResponse {
                     let event_url = format!("https://ethglobal.com/events/{}", event.slug);
                     let event_type = event._type;
 
-                    let description = format!(
-                        r#"{event_name}
-                        {event_type}
-                        
-                        {event_url}
-                        "#,
-                    );
+                    let mut description = String::new();
+                    description.push_str(&event_name);
+                    description.push_str("\\\\n");
+                    description.push_str(&event_type);
+                    description.push_str("\\\\n\\\\n");
+                    description.push_str(&event_url);
 
                     cevent.description(description.as_str());
 
