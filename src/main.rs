@@ -2,7 +2,7 @@ use chrono::{DateTime, Utc};
 use futures::prelude::*;
 use icalendar::{Calendar, CalendarComponent, Component, Event, EventLike};
 use poem::{
-    get, handler, http::HeaderMap, listener::TcpListener, web::{headers::UserAgent, Data, RealIp}, EndpointExt, IntoResponse, Route, Server
+    get, handler, http::HeaderMap, listener::TcpListener, web::{headers::UserAgent, Data, Html, RealIp}, EndpointExt, IntoResponse, Route, Server
 };
 use poem_openapi::payload::PlainText;
 use reqwest::{self, StatusCode};
@@ -24,6 +24,7 @@ async fn main() {
     let state = Arc::new(AppState::new().await);
 
     let app = Route::new()
+        .at("/", get(get_home))
         .at("/ethglobal.ics", get(get_events))
         .data(state);
 
@@ -31,6 +32,11 @@ async fn main() {
         .run(app)
         .await
         .unwrap();
+}
+
+#[handler]
+async fn get_home() -> impl IntoResponse {
+    Html(include_str!("./index.html").to_string())
 }
 
 #[derive(Serialize, Deserialize)]

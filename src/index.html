@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello, world!</title>
+        <style>
+            body, html {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                font-family: monospace;
+                font-size: 16px;
+            }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                border: 1px solid #ccc;
+                padding: 16px;
+                margin-top: 32px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+            }
+            h1, h2, h3, p, ul, li {
+                margin: 0;
+                padding: 0;
+            }
+            ul {
+                list-style-type: none;
+            }
+            ul li {
+                display: flex;
+                gap: 4px;
+            }
+            li p {
+                opacity: 0.8;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>v3x.events</h1>
+            <p>A collection of generative calendar based on real-world data.</p>
+            <ul>
+                <li>
+                    <span>-</span>
+                    <a href="/ethglobal.ics">ETHGlobal Events</a>
+                    <p>// All active ETHGlobal events (Source: <a href="https://www.ethglobal.com/events" target="_blank">ethglobal.com/events</a>)</p>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
